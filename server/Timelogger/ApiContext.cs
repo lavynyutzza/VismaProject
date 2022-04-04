@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Timelogger.Entities;
 
-namespace Timelogger
-{
-	public class ApiContext : DbContext
+namespace Timelogger {
+    public class ApiContext : DbContext
 	{
 		public ApiContext(DbContextOptions<ApiContext> options)
 			: base(options)
@@ -11,5 +10,8 @@ namespace Timelogger
 		}
 
 		public DbSet<Project> Projects { get; set; }
+
+		public DbSet<Activity> Activities { get; set; }
+
 	}
 }
