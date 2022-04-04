@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import ProjectService from "../api/ProjectService";
 import ProjectsTable from "../components/ProjectsTable";
+import AddProject from "./AddProject";
 
 export default class ProjectsList extends Component<any, any> {
     constructor(props){
@@ -25,7 +26,6 @@ export default class ProjectsList extends Component<any, any> {
               projects: response,
               isReady: true
             });
-            console.log("response " + response);
           })
           .catch(e => {
             console.log(e);
@@ -40,7 +40,7 @@ export default class ProjectsList extends Component<any, any> {
             <>
                 <div className="flex items-center my-6">
                     <div className="w-1/2">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add entry</button>
+                        <AddProject/>
                     </div>
     
                     <div className="w-1/2 flex justify-end">
@@ -53,9 +53,7 @@ export default class ProjectsList extends Component<any, any> {
 
                 <div className="col-md-6">
                     <ProjectsTable data = {projects}/>
-
                 </div>
-
             </>
         );
     }

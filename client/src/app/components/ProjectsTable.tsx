@@ -15,13 +15,12 @@ export default function ProjectsTable(props) {
 			<tbody>
 			{ props.data.map(
 				project => 
-				<tr>
+				<tr key={project.id}>
 					<td className="border px-4 py-2 w-12">{project.id}</td>
 					<td className="border px-4 py-2">{project.name}</td>
 					<td className="border px-4 py-2">{project.description}</td>
 					<td className="border px-4 py-2">{project.deadline}</td>
 					<td className="border px-4 py-2">{project.clientName}</td>
-
 				</tr>
 			)}
 			</tbody>
