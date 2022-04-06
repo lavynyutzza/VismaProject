@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ProjectsTable(props) {
 	return (
@@ -10,6 +11,7 @@ export default function ProjectsTable(props) {
 					<th className="border px-4 py-2">Description</th>
 					<th className="border px-4 py-2">Deadline</th>
 					<th className="border px-4 py-2">ClientName</th>
+					<th className="border px-4 py-2"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,6 +23,9 @@ export default function ProjectsTable(props) {
 					<td className="border px-4 py-2">{project.description}</td>
 					<td className="border px-4 py-2">{project.deadline}</td>
 					<td className="border px-4 py-2">{project.clientName}</td>
+					<td className="border px-4 py-2">
+						<Link to={"/projects/" + project.id} className="badge badge-warning">View</Link>
+					</td>
 				</tr>
 			)}
 			</tbody>
