@@ -34,12 +34,12 @@ namespace Timelogger.Api.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Insert(Activity activity) {
+        public IActionResult Insert([FromBody] Activity activity) {
             return Ok(activityService.InsertActivity(activity));
         }
 
         [HttpPut]
-        public IActionResult Update(Activity activity) {
+        public IActionResult Update([FromBody] Activity activity) {
             return Ok(activityService.UpdateActivity(activity));
         }
 
