@@ -2,6 +2,7 @@ import * as React from 'react';
 import './tailwind.generated.css';
 import ProjectsList from './views/ProjectsList';
 import { Switch, Route, BrowserRouter } from "react-router-dom";
+import ProjectDetails from './views/ProjectDetails';
 
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
                         <div>               
                             <Switch>
                                 <Route exact path="/" component={ProjectsList} />
+                                <Route exact path="/projects/:id" component={ProjectDetails} />
                             </Switch>
                         </div>  
                     </BrowserRouter>
