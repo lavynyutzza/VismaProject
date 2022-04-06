@@ -45,12 +45,12 @@ namespace Timelogger.Api.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Insert(Project project) {
+        public IActionResult Insert([FromBody] Project project) {
             return Ok(projectService.InsertProject(project));
         }
 
         [HttpPut]
-        public IActionResult Update(Project project) {
+        public IActionResult Update([FromBody] Project project) {
             return Ok(projectService.UpdateProject(project));
         }
 
