@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ProjectService from "../api/ProjectService";
-import Collapsible from "../components/Collapsible";
+import ProjectComponent from "../components/ProjectComponent";
 
 export default class AddProject extends Component {
     constructor(props){
@@ -63,27 +63,16 @@ export default class AddProject extends Component {
     render() { 
         return (
             <>
-            <Collapsible title='Add new project'>
-                <form >	
-                    <label htmlFor='name'>Name</label>
-                    <input className="border rounded-full py-2 px-4" type="text" aria-label="Name" id="name" onChange={this.onChangeName}/>
-                    <br></br>
-
-                    <label htmlFor='description'>Description</label>
-                    <input className="border rounded-full py-2 px-4" type="text" aria-label="Description" id="description" onChange={this.onChangeDescription}/>
-                    <br></br>
-
-                    <label htmlFor='deadline'>Deadline</label>
-                    <input className="border rounded-full py-2 px-4" type="date" aria-label="Deadline"  id="deadline" onChange={this.onChangeDeadline}/>
-                    <br></br>
-
-                    <label htmlFor='clientName'>Client Name</label>
-                    <input className="border rounded-full py-2 px-4" type="text" aria-label="ClientName" id="clientName" onChange={this.onChangeClientName}/>
-                    <br></br>
-
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-full py-2 px-4 ml-2" type="submit" onClick={this.saveProject}>Add</button>
-                </form>
-            </Collapsible>
+                <ProjectComponent project={[]} 
+                    hasData = {false}
+                    onChangeName={this.onChangeName} 
+                    onChangeDescription={this.onChangeDescription}
+                    onChangeDeadline={this.onChangeDeadline}
+                    onChangeClientName={this.onChangeClientName}
+                    onClickAction = {this.saveProject}
+                    clickActionName = "Save project"
+                    sectionTitle= "Add new project"
+                    ></ProjectComponent>
             </>
         );
     }
