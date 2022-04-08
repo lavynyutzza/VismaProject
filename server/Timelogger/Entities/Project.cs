@@ -6,12 +6,12 @@ namespace Timelogger.Entities {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        private DateTime deadline;
-        public DateTime Deadline { 
+        private DateTime? deadline;
+        public DateTime? Deadline { 
             get {
-                return DateTime.SpecifyKind(deadline, DateTimeKind.Utc);
+                return DateTime.SpecifyKind(deadline.GetValueOrDefault(), DateTimeKind.Utc);
             }
-            set { deadline = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+            set { deadline = DateTime.SpecifyKind(value.GetValueOrDefault(), DateTimeKind.Utc);
             } 
         }
         public string Description { get; set; }
