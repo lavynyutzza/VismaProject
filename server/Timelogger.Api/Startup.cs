@@ -44,8 +44,7 @@ namespace Timelogger.Api {
                 services.AddCors();
             }
 
-            services.AddSwaggerGen(c =>
-            {
+            services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo {
                     Title = "Timelogger API",
                     Version = "v1"
@@ -87,11 +86,13 @@ namespace Timelogger.Api {
                 Id = 1,
                 Name = "e-conomic Interview",
                 Description = "aplicatie timelogger",
+                Deadline = new System.DateTime(2022, 04, 15)
             };
 
             var testProject2 = new Project {
                 Id = 2,
-                Name = "bla-bla"
+                Name = "bla-bla",
+                Deadline = new System.DateTime(2022, 04, 01)
             };
 
             context.Projects.Add(testProject1);
@@ -99,7 +100,7 @@ namespace Timelogger.Api {
 
             context.Activities.Add(activity1);
             context.Activities.Add(activity2);
-            context.Activities.Add(activity3);           
+            context.Activities.Add(activity3);
             context.Activities.Add(activity4);
 
             context.SaveChanges();
