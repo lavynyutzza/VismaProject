@@ -11,8 +11,8 @@ export default function Collapsible(props) {
 
     return (
         <div className="collapsible">
-            <div className="w-1/2" {...getToggleProps()}>
-                <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{props.title}</div>
+            <div {...getToggleProps()}>
+                <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">{props.title}</div>
                 <div className="icon">
                     <i className={'fas fa-chevron-circle-' + (isExpanded ? 'up' : 'down')}></i>
                 </div>

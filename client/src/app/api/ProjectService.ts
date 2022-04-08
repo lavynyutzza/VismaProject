@@ -13,6 +13,12 @@ class ProjectService{
 		return data;
 	}
 
+	async searchProjectByName(name) {
+		const response = await fetch(`${BASE_URL}/${name}/search`);
+		const data = await response.json();
+		return data;
+	}
+
 	async getProjectActivities(id) {
 		const response = await fetch(`${BASE_URL}/${id}/activities`);
 		const data = await response.json();

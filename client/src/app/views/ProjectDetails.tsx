@@ -12,14 +12,20 @@ export default class ProjectDetails extends Component<any, any> {
         super(props);
         this.updateProject = this.updateProject.bind(this);
         this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeDeadline = this.onChangeDeadline.bind(this);
+        this.onChangeClientName = this.onChangeClientName.bind(this);
         this.getProjectById = this.getProjectById.bind(this);
 
         this.state = {
             currentProject: {
                 id: null,
                 name: null,
-                description: null
-            }
+                description: null,
+                deadline: null,
+                clientName: null
+            },
+            isReady: false
         };
     }
 
@@ -43,7 +49,8 @@ export default class ProjectDetails extends Component<any, any> {
         ProjectService.getProject(id)
           .then(response => {
             this.setState({
-                currentProject: response
+                currentProject: response,
+                isReady: true
             });
           })
           .catch(e => {
@@ -75,37 +82,85 @@ export default class ProjectDetails extends Component<any, any> {
         }));
     }
 
+    onChangeDescription(e) {
+        const newDesc = e.target.value;
+
+        this.setState(prevState => ({
+            currentProject: {
+                ...prevState.currentProject,
+                description: newDesc
+            }
+        }));
+    }
+
+    onChangeDeadline(e) {
+        const newDeadline = e.target.value;
+
+        this.setState(prevState => ({
+            currentProject: {
+                ...prevState.currentProject,
+                deadline: newDeadline
+            }
+        }));
+    }
+
+    onChangeClientName(e) {
+        const newName = e.target.value;
+
+        this.setState(prevState => ({
+            currentProject: {
+                ...prevState.currentProject,
+                clientName: newName
+            }
+        }));
+    }
+
+    formatDate(date: string){
+		return new Intl.DateTimeFormat("en-GB",
+						{
+							year: "numeric",
+							month: "2-digit",
+							day: "2-digit",
+                            timeZoneName: "short"
+						}).format(new Date(date));
+	}
+
     render() { 
         const project = this.state.currentProject;
+        const date = new Date(project.deadline).toISOString().substring(0, 10);
+        
+        // const isReady = this.state.isReady;
+        // if(!isReady) return null;
 
         return (
             <>
-                <div className="flex items-center my-6">
-                    <div className="w-1/2">
-                        <Collapsible title='Project details'>
+                <div className="flex my-6 justify-between">
+                    <div className="w-1/3">
+                        <Collapsible title='View or update project details'>
                             <form >	
                                 <label htmlFor='name'>Name</label>
                                 <input className="border rounded-full py-2 px-4" type="text" aria-label="Name" id="name" defaultValue={project.name} onChange={this.onChangeName}/>
                                 <br></br>
 
                                 <label htmlFor='description'>Description</label>
-                                <input className="border rounded-full py-2 px-4" type="text" aria-label="Description" id="description" defaultValue={project.description}/>
+                                <input className="border rounded-full py-2 px-4" type="text" aria-label="Description" id="description" defaultValue={project.description} onChange={this.onChangeDescription}/>
                                 <br></br>
 
                                 <label htmlFor='deadline'>Deadline</label>
-                                <input className="border rounded-full py-2 px-4" type="text" aria-label="Deadline" id="deadline" defaultValue={project.deadline}/>
+                                <input className="border rounded-full py-2 px-4" type="date" aria-label="Deadline" id="deadline" defaultValue={date} onChange={this.onChangeDeadline}/>
                                 <br></br>
 
                                 <label htmlFor='clientName'>Client Name</label>
-                                <input className="border rounded-full py-2 px-4" type="text" aria-label="ClientName" id="clientName" defaultValue={project.clientName}/>
+                                <input className="border rounded-full py-2 px-4" type="text" aria-label="ClientName" id="clientName" defaultValue={project.clientName} onChange={this.onChangeClientName}/>
                                 <br></br>
 
                                 <button className="bg-blue-500 hover:bg-blue-700 text-white rounded-full py-2 px-4 ml-2" type="submit" onClick={this.updateProject}>Update</button>
                             </form>
                         </Collapsible>
                     </div>
+
     
-                    <div className="w-1/2 justify-end">
+                    <div className="w-1/3">
                         <AddActivity projectId = {project.id}></AddActivity> 
                     </div>
                 </div>
