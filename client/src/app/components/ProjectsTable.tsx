@@ -7,6 +7,16 @@ export default function ProjectsTable(props) {
 	const [sortType, setSortType] = useState('id');
 	const projects = props.data;
 
+	const sortNumbers = function(a, b, sortProperty) {
+		return a[sortProperty] - b[sortProperty];
+	}
+
+	const sortStringOrDate = function(a, b, sortProperty) {
+		if(a[sortProperty].toString().toLowerCase() < b[sortProperty].toString().toLowerCase()) return -1;
+		if(a[sortProperty].toString().toLowerCase() > b[sortProperty].toString().toLowerCase()) return 1;
+		return 0;
+	}
+
 	useEffect(() => {
 	  	const sortArray = type => {
 			const types = {
@@ -15,11 +25,9 @@ export default function ProjectsTable(props) {
 				deadline: 'deadline',
 				};
 		const sortProperty = types[type];
-		const sorted = [...projects].sort(function(a, b) {
-			if(a[sortProperty].toString().toLowerCase() < b[sortProperty].toString().toLowerCase()) return -1;
-			if(a[sortProperty].toString().toLowerCase() > b[sortProperty].toString().toLowerCase()) return 1;
-			return 0;
-		   });
+		const sorted =  sortProperty === types["id"] ? 
+			([...projects].sort((a, b) => sortNumbers(a, b, sortProperty))) :
+			([...projects].sort((a, b) => sortStringOrDate(a, b, sortProperty)));
 
 		setData(sorted);
 		console.log(sorted);
