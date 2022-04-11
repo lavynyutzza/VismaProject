@@ -4,8 +4,7 @@ import Collapsible from "./Collapsible";
 export default function ProjectComponent(props) {
 
         const project = props.project;
-        const deadlineDate = props.hasData ? new Date(project.deadline) : new Date();
-        const deadLineString = deadlineDate.toISOString().substring(0, 10);
+        const deadLineString = new Date(project.deadline).toISOString().substring(0, 10);
         console.log(deadLineString);
         
         return (

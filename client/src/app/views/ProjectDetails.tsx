@@ -133,7 +133,6 @@ export default class ProjectDetails extends Component<any, any> {
                 <div className="flex my-6 justify-between">
                     <div className="w-1/3">
                         <ProjectComponent project={project}
-                            hasData={true}
                             onChangeName={this.onChangeName} 
                             onChangeDescription={this.onChangeDescription}
                             onChangeDeadline={this.onChangeDeadline}

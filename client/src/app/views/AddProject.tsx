@@ -14,7 +14,7 @@ export default class AddProject extends Component {
         this.state = {
             name: null,
             description: null,
-            deadline: null,
+            deadline: new Date(),
             clientName: null
         };
     }
@@ -63,8 +63,7 @@ export default class AddProject extends Component {
     render() { 
         return (
             <>
-                <ProjectComponent project={[]} 
-                    hasData = {false}
+                <ProjectComponent project={this.state} 
                     onChangeName={this.onChangeName} 
                     onChangeDescription={this.onChangeDescription}
                     onChangeDeadline={this.onChangeDeadline}
