@@ -4,9 +4,10 @@ import Collapsible from "./Collapsible";
 export default function ProjectComponent(props) {
 
         const project = props.project;
-        const deadline = props.hasData ? new Date(project.deadline).toISOString().substring(0, 10) : "2022-01-01";
-        console.log(deadline);
-
+        const deadlineDate = props.hasData ? new Date(project.deadline) : new Date();
+        const deadLineString = deadlineDate.toISOString().substring(0, 10);
+        console.log(deadLineString);
+        
         return (
             <>
                 <Collapsible title={props.sectionTitle}>
@@ -20,7 +21,7 @@ export default function ProjectComponent(props) {
                         <br></br>
 
                         <label htmlFor='deadline'>Deadline</label>
-                        <input className="border rounded-full py-2 px-4" type="date" aria-label="Deadline"  id="deadline" defaultValue={deadline} onChange={props.onChangeDeadline}/>
+                        <input className="border rounded-full py-2 px-4" type="date" aria-label="Deadline"  id="deadline" value={deadLineString} onChange={props.onChangeDeadline}/>
                         <br></br>
 
                         <label htmlFor='clientName'>Client Name</label>
