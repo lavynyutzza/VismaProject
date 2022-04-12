@@ -41,6 +41,7 @@ namespace Timelogger.Services {
 
         public void DeleteProject(int id) {
             if(context.Projects.Any(p => p.Id == id)) {
+                context.Activities.RemoveRange(context.Activities.Where(a => a.ProjectId == id));
                 context.Projects.Remove(context.Projects.First(x => x.Id == id));
                 context.SaveChanges();
             }

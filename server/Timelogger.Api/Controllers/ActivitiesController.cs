@@ -44,6 +44,7 @@ namespace Timelogger.Api.Controllers {
         }
 
         [HttpDelete]
+        [Route("id")]
         public IActionResult Delete(int id) {
             activityService.DeleteActivity(id);
             return Ok();

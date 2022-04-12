@@ -55,6 +55,7 @@ namespace Timelogger.Api.Controllers {
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public IActionResult Delete(int id) {
             projectService.DeleteProject(id);
             return Ok();
