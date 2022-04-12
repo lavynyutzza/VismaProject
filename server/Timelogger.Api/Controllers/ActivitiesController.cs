@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Timelogger.Entities;
 using Timelogger.Services;
+using Timelogger.Validators;
 
 namespace Timelogger.Api.Controllers {
 
@@ -10,9 +11,11 @@ namespace Timelogger.Api.Controllers {
     public class ActivitiesController: Controller {
 
 		private readonly IActivityService activityService;
+        private readonly IActivityValidator activityValidator;
 
-		public ActivitiesController(IActivityService activityService) {
+        public ActivitiesController(IActivityService activityService, IActivityValidator activityValidator) {
 			this.activityService = activityService;
+            this.activityValidator = activityValidator;
 		}
 
         [HttpGet]
@@ -44,12 +47,14 @@ namespace Timelogger.Api.Controllers {
                                         .SelectMany(v => v.Errors)
                                         .Select(e => e.ErrorMessage));
                 }
+                errorMessage += "\n" + activityValidator.Validate(activity);
 
                 if(!string.IsNullOrWhiteSpace(errorMessage)) {
                     return BadRequest(errorMessage);
                 }
 
                 return Ok(activityService.InsertActivity(activity));
+
             } catch(Exception ex) {
                 return new UnprocessableEntityObjectResult(ex.ToString());
             }
@@ -64,6 +69,7 @@ namespace Timelogger.Api.Controllers {
                                         .SelectMany(v => v.Errors)
                                         .Select(e => e.ErrorMessage));
                 }
+                errorMessage += "\n" + activityValidator.Validate(activity);
 
                 if(!string.IsNullOrWhiteSpace(errorMessage)) {
                     return BadRequest(errorMessage);

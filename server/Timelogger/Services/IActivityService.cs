@@ -9,6 +9,5 @@ namespace Timelogger.Services {
         Activity InsertActivity(Activity project);
         Activity UpdateActivity(Activity project);
         void DeleteActivity(int id);
-
     }
 }

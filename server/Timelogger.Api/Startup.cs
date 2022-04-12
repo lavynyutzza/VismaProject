@@ -5,9 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
-using Timelogger.Entities;
 using Microsoft.OpenApi.Models;
 using Timelogger.Services;
+using Timelogger.Validators;
 
 namespace Timelogger.Api {
     public class Startup {
@@ -31,6 +31,8 @@ namespace Timelogger.Api {
             services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("e-conomic interview"));
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IActivityService, ActivityService>();
+            services.AddTransient<IProjectValidator, ProjectValidator>();
+            services.AddTransient<IActivityValidator, ActivityValidator>();
 
 
             services.AddLogging(builder => {
@@ -76,34 +78,7 @@ namespace Timelogger.Api {
 
         private static void SeedDatabase(IServiceScope scope) {
             var context = scope.ServiceProvider.GetService<ApiContext>();
-
-            var activity1 = new Activity { Id = 1, Name = "TestActivity1", HoursSpent = 2, ProjectId = 1 };
-            var activity2 = new Activity { Id = 2, Name = "TestActivity2", HoursSpent = 3, ProjectId = 1 };
-            var activity3 = new Activity { Id = 3, Name = "TestActivity3", HoursSpent = 4, ProjectId = 2 };
-            var activity4 = new Activity { Id = 4, Name = "TestActivity4", HoursSpent = 5, ProjectId = 2 };
-
-            var testProject1 = new Project {
-                Id = 1,
-                Name = "e-conomic Interview",
-                Description = "aplicatie timelogger",
-                Deadline = new System.DateTime(2022, 04, 15)
-            };
-
-            var testProject2 = new Project {
-                Id = 2,
-                Name = "bla-bla",
-                Deadline = new System.DateTime(2022, 04, 01)
-            };
-
-            context.Projects.Add(testProject1);
-            context.Projects.Add(testProject2);
-
-            context.Activities.Add(activity1);
-            context.Activities.Add(activity2);
-            context.Activities.Add(activity3);
-            context.Activities.Add(activity4);
-
-            context.SaveChanges();
+            Database.SeedDatabase(context);
         }
     }
 }

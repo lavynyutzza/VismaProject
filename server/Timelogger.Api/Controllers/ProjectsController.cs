@@ -9,9 +9,11 @@ namespace Timelogger.Api.Controllers {
     [Route("api/[controller]")]
     public class ProjectsController: Controller {
         private readonly IProjectService projectService;
+        private readonly IProjectValidator projectValidator;
 
-        public ProjectsController(IProjectService projectService) {
+        public ProjectsController(IProjectService projectService, IProjectValidator projectValidator) {
             this.projectService = projectService;
+            this.projectValidator = projectValidator;
         }
 
         [HttpGet]
@@ -57,7 +59,7 @@ namespace Timelogger.Api.Controllers {
                                         .Select(e => e.ErrorMessage));
                 }
 
-                errorMessage += "\n" + ProjectValidator.Validate(project);
+                errorMessage += "\n" + projectValidator.Validate(project);
 
                 if(!string.IsNullOrWhiteSpace(errorMessage)) {
                     return BadRequest(errorMessage);
@@ -80,7 +82,7 @@ namespace Timelogger.Api.Controllers {
 
 
                 }
-                errorMessage += "\n" + ProjectValidator.Validate(project);
+                errorMessage += "\n" + projectValidator.Validate(project);
 
                 if(!string.IsNullOrWhiteSpace(errorMessage)) {
                     return BadRequest(errorMessage);
