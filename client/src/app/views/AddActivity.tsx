@@ -29,16 +29,17 @@ export default class AddActivity extends Component<any, any> {
 
     saveActivity() {
         const data = this.state;
-        console.log(data);
 
-        ActivityService.InsertActivity(data)
-        .then( response => {
-            console.log(JSON.stringify(response));
+        if(this.validateData(data)){
+            ActivityService.InsertActivity(data)
+            .then( response => {
+                console.log(JSON.stringify(response));
             })
-        .catch(e => {
-                console.log(e);
+            .catch(e => {
+                    console.log(e);
             })
-      }
+        }
+    }
 
     onChangeName(e) {
         this.setState({
@@ -59,6 +60,32 @@ export default class AddActivity extends Component<any, any> {
             hoursSpent: e.target.valueAsNumber
         });
         console.log(this.state);
+    }
+
+    validateData(data) {
+        return this.validateName(data.name) &&
+        this.validateHoursSpent(data.hoursSpent);
+    }
+
+    validateName(name: string) {
+        if(!name){
+            alert("The activity name is invalid!");
+            return false;
+        }
+        return true;
+    }
+
+    validateHoursSpent(hours: number) {
+        if(!hours){
+            alert("The number of hours is invalid!");
+            return false;
+        }
+        if(hours < 0){
+            alert("The number of hours is invalid!");
+            return false;
+        }
+
+        return true;
     }
 
     render() { 
