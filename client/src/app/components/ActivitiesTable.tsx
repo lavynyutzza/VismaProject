@@ -9,6 +9,7 @@ export default function ActivitiesTable(props) {
 					<th className="border px-4 py-2">Activity Name</th>
 					<th className="border px-4 py-2">Description</th>
 					<th className="border px-4 py-2">Hours Spent</th>
+					<th className="border px-4 py-2"/>
 				</tr>
 			</thead>
 			<tbody>
@@ -19,6 +20,9 @@ export default function ActivitiesTable(props) {
 					<td className="border px-4 py-2">{activity.name}</td>
 					<td className="border px-4 py-2">{activity.description}</td>
 					<td className="border px-4 py-2">{activity.hoursSpent}</td>
+					<td className="border px-4 py-2">
+						<button onClick= { () => props.deleteActivity(activity.id)}>Delete</button>
+					</td>
 				</tr>
 			)}
 			</tbody>

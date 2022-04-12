@@ -1,5 +1,6 @@
 import React from "react";
 import { Component } from "react";
+import ActivityService from "../api/ActivityService";
 import ProjectService from "../api/ProjectService";
 import ActivitiesTable from "../components/ActivitiesTable";
 
@@ -8,6 +9,7 @@ export default class ActivitiesList extends Component<any, any> {
         super(props);
 
         this.getAllActivities = this.getAllActivities.bind(this);
+        this.deleteActivity = this.deleteActivity.bind(this);
 
         this.state = {
             activities: [],
@@ -38,6 +40,25 @@ export default class ActivitiesList extends Component<any, any> {
           });
     }
 
+    deleteActivity(id) {
+        var confirmation = window.confirm("Are you sure you want to delete this activity?");
+  
+        if(confirmation === true) {
+            ActivityService.DeleteActivity(id)
+            .then(response => {
+              if(response.ok) {
+                this.setState({
+                  isReady: false
+                });
+                this.getAllActivities(this.state.projectId);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }    
+      }
+
       render() {
         const {activities, isReady} = this.state;
 
@@ -46,7 +67,7 @@ export default class ActivitiesList extends Component<any, any> {
         return (
             <>
                 <div className="col-md-6">
-                    <ActivitiesTable data = {activities}/>
+                    <ActivitiesTable data = {activities} deleteActivity={this.deleteActivity}/>
                 </div>
             </>
         );

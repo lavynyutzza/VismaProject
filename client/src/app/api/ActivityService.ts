@@ -34,6 +34,10 @@ class ActivityService{
 		await fetch(`${BASE_URL}`, requestOptions)
 		.then(response => console.log(response.json()));
 	}
+
+	async DeleteActivity(activityId) {
+		return await fetch(`${BASE_URL}/${activityId}`, { method: 'DELETE' })
+	}
 }
 
 export default new ActivityService();
