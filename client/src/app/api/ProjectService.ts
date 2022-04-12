@@ -46,6 +46,10 @@ class ProjectService{
 		await fetch(`${BASE_URL}`, requestOptions)
 		.then(response => console.log(response.json()));
 	}
+
+	async DeleteProject(projectId) {
+		return await fetch(`${BASE_URL}/${projectId}`, { method: 'DELETE' })
+	}
 }
 
 export default new ProjectService();

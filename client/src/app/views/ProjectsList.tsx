@@ -10,6 +10,7 @@ export default class ProjectsList extends Component<any, any> {
         this.getAllProjects = this.getAllProjects.bind(this);
         this.searchProjects = this.searchProjects.bind(this);
         this.onChangeSearchName = this.onChangeSearchName.bind(this);
+        this.deleteProject = this.deleteProject.bind(this);
 
         this.state = {
             projects: [],
@@ -48,20 +49,39 @@ export default class ProjectsList extends Component<any, any> {
 
     searchProjects(){
         console.log(this.state);
+        this.setState({
+          isReady: false
+        });
 
         ProjectService.searchProjectByName(this.state.searchName)
           .then(response => {
             this.setState({
-              project: response,
+              projects: response,
               isReady: true
             });
-
-            console.log(this.state);
-            console.log(response);
           })
           .catch(e => {
             console.log(e);
           });
+    }
+
+    deleteProject(id) {
+      var confirmation = window.confirm("Are you sure you want to delete this project and all its activities?");
+
+      if(confirmation === true) {
+          ProjectService.DeleteProject(id)
+          .then(response => {
+            if(response.ok) {
+              this.setState({
+                isReady: false
+              });
+              this.getAllProjects();
+            }
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }    
     }
 
       render() {
@@ -85,7 +105,7 @@ export default class ProjectsList extends Component<any, any> {
                 {isReady === true &&
                 <>
                     <div className="col-md-6">
-                        <ProjectsTable data = {projects}/>
+                        <ProjectsTable data = {projects} deleteProject={this.deleteProject}/>
                     </div>
                 </>
                 }
