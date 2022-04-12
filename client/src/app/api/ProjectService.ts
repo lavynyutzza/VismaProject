@@ -32,8 +32,7 @@ class ProjectService{
 			body: JSON.stringify(project)
 		};
 
-		await fetch(`${BASE_URL}`, requestOptions)
-		.then(response => console.log(response.json()));
+		return await fetch(`${BASE_URL}`, requestOptions);
 	}
 
 	async UpdateProject(project) {
@@ -43,8 +42,7 @@ class ProjectService{
 			body: JSON.stringify(project)
 		};
 
-		await fetch(`${BASE_URL}`, requestOptions)
-		.then(response => console.log(response.json()));
+		return await fetch(`${BASE_URL}`, requestOptions);
 	}
 
 	async DeleteProject(projectId) {

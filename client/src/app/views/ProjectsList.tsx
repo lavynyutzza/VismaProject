@@ -20,7 +20,6 @@ export default class ProjectsList extends Component<any, any> {
     }
 
     componentDidMount() {
-        console.log(this.state);
         this.getAllProjects();
     }
 
@@ -40,7 +39,6 @@ export default class ProjectsList extends Component<any, any> {
 
     onChangeSearchName(e) {
         const searchName = e.target.value;
-        console.log(searchName);
     
         this.setState({
             searchName: searchName
@@ -48,7 +46,6 @@ export default class ProjectsList extends Component<any, any> {
       }
 
     searchProjects(){
-        console.log(this.state);
         this.setState({
           isReady: false
         });
@@ -86,7 +83,6 @@ export default class ProjectsList extends Component<any, any> {
 
       render() {
         const {projects, isReady} = this.state;
-        console.log("isReady " + isReady);
     
         return (
             <>

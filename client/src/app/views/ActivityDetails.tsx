@@ -56,18 +56,25 @@ export default class ProjectDetails extends Component<any, any> {
           });
     }
 
-    updateActivity() {
+    async updateActivity() {
         const activity = this.state.currentActivity;
 
-        if(this.validateData(activity)){
-            ActivityService.UpdateActivity(activity)
-            .then( response => {
-                console.log(JSON.stringify(response));
-            })
-            .catch(e => {
-                    console.log(e);
-            })
-        }
+        await ActivityService.UpdateActivity(activity)
+        .then((response) => {
+            if(response.ok){
+                return null;
+            }else{
+                return response.text()
+            }
+        })
+        .then((text) => { 
+            if(text){
+                alert(text);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     onChangeName(e) {
@@ -101,28 +108,6 @@ export default class ProjectDetails extends Component<any, any> {
                 hoursSpent: newHours
             }
         }));
-    }
-
-    validateData(data) {
-        return this.validateName(data.name) &&
-        this.validateHoursSpent(data.hoursSpent);
-    }
-
-    validateName(name: string) {
-        if(!name){
-            alert("The activity name is invalid!");
-            return false;
-        }
-        return true;
-    }
-
-    validateHoursSpent(hours: number) {
-        if(hours < 0){
-            alert("The number of hours is invalid!");
-            return false;
-        }
-
-        return true;
     }
 
     render() { 

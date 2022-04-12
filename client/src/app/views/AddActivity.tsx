@@ -27,18 +27,25 @@ export default class AddActivity extends Component<any, any> {
         }
     }
 
-    saveActivity() {
+    async saveActivity() {
         const data = this.state;
 
-        if(this.validateData(data)){
-            ActivityService.InsertActivity(data)
-            .then( response => {
-                console.log(JSON.stringify(response));
-            })
-            .catch(e => {
-                    console.log(e);
-            })
-        }
+        await ActivityService.InsertActivity(data)
+        .then((response) => {
+            if(response.ok){
+                return null;
+            }else{
+                return response.text()
+            }
+        })
+        .then((text) => { 
+            if(text){
+                alert(text);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     onChangeName(e) {
@@ -62,31 +69,6 @@ export default class AddActivity extends Component<any, any> {
         console.log(this.state);
     }
 
-    validateData(data) {
-        return this.validateName(data.name) &&
-        this.validateHoursSpent(data.hoursSpent);
-    }
-
-    validateName(name: string) {
-        if(!name){
-            alert("The activity name is invalid!");
-            return false;
-        }
-        return true;
-    }
-
-    validateHoursSpent(hours: number) {
-        if(!hours){
-            alert("The number of hours is invalid!");
-            return false;
-        }
-        if(hours < 0){
-            alert("The number of hours is invalid!");
-            return false;
-        }
-
-        return true;
-    }
 
     render() { 
         return (

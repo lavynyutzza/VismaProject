@@ -5,14 +5,13 @@ export default function ProjectComponent(props) {
 
         const project = props.project;
         const deadLineString = new Date(project.deadline).toISOString().substring(0, 10);
-        console.log(deadLineString);
         
         return (
             <>
                 <Collapsible title={props.sectionTitle}>
                     <form >	
                         <label htmlFor='name'>Name</label>
-                        <input className="border rounded-full py-2 px-4" type="text" aria-label="Name" id="name" defaultValue={project.name} onChange={props.onChangeName}/>
+                        <input className="border rounded-full py-2 px-4" type="text" minLength={3} aria-label="Name" id="name" defaultValue={project.name} onChange={props.onChangeName}/>
                         <br></br>
 
                         <label htmlFor='description'>Description</label>

@@ -59,18 +59,25 @@ export default class ProjectDetails extends Component<any, any> {
           });
     }
 
-    updateProject() {
+    async updateProject() {
         const project = this.state.currentProject;
 
-        if(this.validateData(project)){
-            ProjectService.UpdateProject(project)
-            .then( response => {
-                console.log(JSON.stringify(response));
+        await ProjectService.UpdateProject(project)
+            .then((response) => {
+                if(response.ok){
+                    return null;
+                }else{
+                    return response.text()
+                }
             })
-            .catch(e => {
-                    console.log(e);
+            .then((text) => { 
+                if(text){
+                    alert(text);
+                }
             })
-        }
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     onChangeName(e) {
@@ -126,32 +133,6 @@ export default class ProjectDetails extends Component<any, any> {
                             timeZoneName: "short"
 						}).format(new Date(date));
 	}
-
-    validateData(data) {
-        return this.validateName(data.name) &&
-        this.validateDeadline(new Date(data.deadline));
-    }
-
-    validateName(name: string) {
-        if(!name){
-            alert("The project name is invalid!");
-            return false;
-        }
-        return true;
-    }
-
-    validateDeadline(deadline: Date) {
-        if(!deadline){
-            alert("The deadline is invalid!");
-            return false;
-        }
-        if(deadline <= new Date()){
-            alert("The deadline cannot be in the past!");
-            return false;
-        }
-
-        return true;
-    }
 
     render() { 
         const project = this.state.currentProject;

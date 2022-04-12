@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using Timelogger.Entities;
 using Timelogger.Services;
+using Timelogger.Validators;
 
 namespace Timelogger.Api.Controllers {
     [Route("api/[controller]")]
@@ -46,19 +49,58 @@ namespace Timelogger.Api.Controllers {
 
         [HttpPost]
         public IActionResult Insert([FromBody] Project project) {
-            return Ok(projectService.InsertProject(project));
+            try {
+                var errorMessage = string.Empty;
+                if(!ModelState.IsValid) {
+                    errorMessage = string.Join("\n", ModelState.Values
+                                        .SelectMany(v => v.Errors)
+                                        .Select(e => e.ErrorMessage));
+                }
+
+                errorMessage += "\n" + ProjectValidator.Validate(project);
+
+                if(!string.IsNullOrWhiteSpace(errorMessage)) {
+                    return BadRequest(errorMessage);
+                }
+
+                return Ok(projectService.InsertProject(project));
+            } catch(Exception ex) {
+                return new UnprocessableEntityObjectResult(ex.ToString());
+            }
         }
 
         [HttpPut]
         public IActionResult Update([FromBody] Project project) {
-            return Ok(projectService.UpdateProject(project));
+            try {
+                var errorMessage = string.Empty;
+                if(!ModelState.IsValid) {
+                    errorMessage = string.Join("\n", ModelState.Values
+                                        .SelectMany(v => v.Errors)
+                                        .Select(e => e.ErrorMessage));
+
+
+                }
+                errorMessage += "\n" + ProjectValidator.Validate(project);
+
+                if(!string.IsNullOrWhiteSpace(errorMessage)) {
+                    return BadRequest(errorMessage);
+                }
+                return Ok(projectService.UpdateProject(project));
+
+            } catch(Exception ex) {
+                return new UnprocessableEntityObjectResult(ex.ToString());
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
         public IActionResult Delete(int id) {
-            projectService.DeleteProject(id);
-            return Ok();
+            try {
+                projectService.DeleteProject(id);
+                return Ok();
+            } catch(Exception ex) {
+                return new UnprocessableEntityObjectResult(ex.ToString());
+            }
         }
     }
 }

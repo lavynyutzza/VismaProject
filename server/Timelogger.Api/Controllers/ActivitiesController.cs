@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using Timelogger.Entities;
 using Timelogger.Services;
 
@@ -35,19 +37,54 @@ namespace Timelogger.Api.Controllers {
 
         [HttpPost]
         public IActionResult Insert([FromBody] Activity activity) {
-            return Ok(activityService.InsertActivity(activity));
+            try {
+                var errorMessage = string.Empty;
+                if(!ModelState.IsValid) {
+                    errorMessage = string.Join("\n", ModelState.Values
+                                        .SelectMany(v => v.Errors)
+                                        .Select(e => e.ErrorMessage));
+                }
+
+                if(!string.IsNullOrWhiteSpace(errorMessage)) {
+                    return BadRequest(errorMessage);
+                }
+
+                return Ok(activityService.InsertActivity(activity));
+            } catch(Exception ex) {
+                return new UnprocessableEntityObjectResult(ex.ToString());
+            }
         }
 
         [HttpPut]
         public IActionResult Update([FromBody] Activity activity) {
-            return Ok(activityService.UpdateActivity(activity));
+            try {
+                var errorMessage = string.Empty;
+                if(!ModelState.IsValid) {
+                    errorMessage = string.Join("\n", ModelState.Values
+                                        .SelectMany(v => v.Errors)
+                                        .Select(e => e.ErrorMessage));
+                }
+
+                if(!string.IsNullOrWhiteSpace(errorMessage)) {
+                    return BadRequest(errorMessage);
+                }
+
+                return Ok(activityService.UpdateActivity(activity));
+
+            } catch(Exception ex) {
+                return new UnprocessableEntityObjectResult(ex.ToString());
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
         public IActionResult Delete(int id) {
-            activityService.DeleteActivity(id);
-            return Ok();
+            try {
+                activityService.DeleteActivity(id);
+                return Ok();
+            } catch(Exception ex) {
+                return new UnprocessableEntityObjectResult(ex.ToString());
+            }
         }
     }
 }

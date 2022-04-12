@@ -20,8 +20,7 @@ class ActivityService{
 			body: JSON.stringify(activty)
 		};
 
-		await fetch(`${BASE_URL}`, requestOptions)
-		.then(response => console.log(response.json()));
+		return await fetch(`${BASE_URL}`, requestOptions);
 	}
 
 	async UpdateActivity(activty) {
@@ -31,8 +30,7 @@ class ActivityService{
 			body: JSON.stringify(activty)
 		};
 
-		await fetch(`${BASE_URL}`, requestOptions)
-		.then(response => console.log(response.json()));
+		return await fetch(`${BASE_URL}`, requestOptions);
 	}
 
 	async DeleteActivity(activityId) {

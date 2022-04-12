@@ -19,18 +19,25 @@ export default class AddProject extends Component {
         };
     }
 
-    saveProject() {
+    async saveProject() {
         const data = this.state;
         
-        if(this.validateData(data)){
-            ProjectService.InsertProject(data)
-            .then( response => {
-                console.log(JSON.stringify(response));
+        await ProjectService.InsertProject(data)
+            .then((response) => {
+                if(response.ok){
+                    return null;
+                }else{
+                    return response.text()
+                }
             })
-            .catch(e => {
-                    console.log(e);
+            .then((text) => { 
+                if(text){
+                    alert(text);
+                }
             })
-        }
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     onChangeName(e) {
@@ -59,32 +66,6 @@ export default class AddProject extends Component {
             clientName: e.target.value
         });
         console.log(this.state);
-    }
-
-    validateData(data) {
-        return this.validateName(data.name) &&
-        this.validateDeadline(new Date(data.deadline));
-    }
-
-    validateName(name: string) {
-        if(!name){
-            alert("The project name is invalid!");
-            return false;
-        }
-        return true;
-    }
-
-    validateDeadline(deadline: Date) {
-        if(!deadline){
-            alert("The deadline is invalid!");
-            return false;
-        }
-        if(deadline <= new Date()){
-            alert("The deadline cannot be in the past!");
-            return false;
-        }
-
-        return true;
     }
 
     render() { 
