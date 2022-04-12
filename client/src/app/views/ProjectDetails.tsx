@@ -1,5 +1,6 @@
 import React from "react";
 import { Component } from "react";
+import { Link } from "react-router-dom";
 import ProjectService from "../api/ProjectService";
 import ProjectComponent from "../components/ProjectComponent";
 import ActivitiesList from "./ActivitiesList";
@@ -178,6 +179,11 @@ export default class ProjectDetails extends Component<any, any> {
                 <div className="col-md-6">
                     <ActivitiesList projectId = {project.id}></ActivitiesList> 
                 </div>
+
+                <div className="col-md-6">
+                    <br></br>
+                    <Link className="bg-blue-500 hover:bg-blue-700 text-white rounded-full py-2 px-4 ml-2" to={"/"}>Back to all projects</Link>
+                </div>  
             </>
         );
     }

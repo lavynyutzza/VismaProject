@@ -3,6 +3,7 @@ import './tailwind.generated.css';
 import ProjectsList from './views/ProjectsList';
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import ProjectDetails from './views/ProjectDetails';
+import ActivityDetails from './views/ActivityDetails';
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
                             <Switch>
                                 <Route exact path="/" component={ProjectsList} />
                                 <Route exact path="/projects/:id" component={ProjectDetails} />
+                                <Route exact path="/projects/:projectId/activity/:activityId" component={ActivityDetails} />
                             </Switch>
                         </div>  
                     </BrowserRouter>

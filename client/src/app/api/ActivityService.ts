@@ -7,7 +7,7 @@ class ActivityService{
 		return data;
 	}
 
-	async getProject(id) {
+	async getActivity(id) {
 		const response = await fetch(`${BASE_URL}/${id}`);
 		const data = await response.json();
 		return data;

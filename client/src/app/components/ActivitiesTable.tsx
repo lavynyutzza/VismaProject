@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ActivitiesTable(props) {
 	return (
@@ -20,6 +21,9 @@ export default function ActivitiesTable(props) {
 					<td className="border px-4 py-2">{activity.name}</td>
 					<td className="border px-4 py-2">{activity.description}</td>
 					<td className="border px-4 py-2">{activity.hoursSpent}</td>
+					<td className="border px-4 py-2">
+						<Link to={"/projects/" + activity.projectId + "/activity/" + activity.id} className="badge badge-warning">View</Link>
+					</td>
 					<td className="border px-4 py-2">
 						<button onClick= { () => props.deleteActivity(activity.id)}>Delete</button>
 					</td>
